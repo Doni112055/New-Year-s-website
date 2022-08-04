@@ -1,9 +1,9 @@
-    /*==================== SHOW MENU ====================*/
+/*==================== Показать меню ====================*/
 const showMenu = (toggleId, navId) =>{
-    const toggle = document.getElementById(toggleId),
-    nav = document.getElementById(navId)
+    const toggle = document.getElementById(toggleId);
+    const nav = document.getElementById(navId);
     
-    // Validate that variables exist
+    // Проверяем, существуют ли оба ID в элементах, если да, то повесить обработчик на меню
     if(toggle && nav){
         toggle.addEventListener('click', ()=>{
             // We add the show-menu class to the div tag with the nav__menu class
@@ -22,6 +22,11 @@ function linkAction(){
     navMenu.classList.remove('show-menu')
 }
 navLink.forEach(n => n.addEventListener('click', linkAction))
+
+
+
+
+
 
 /*==================== SCROLL SECTIONS ACTIVE LINK ====================*/
 const sections = document.querySelectorAll('section[id]')
@@ -62,21 +67,25 @@ window.addEventListener('scroll', scrollTop)
 /*==================== DARK LIGHT THEME ====================*/ 
 const themeButton = document.getElementById('theme-button')
 const darkTheme = 'dark-theme'
-const iconTheme = 'bx-sun'
+const iconTheme = 'bx-toggle-right'
 
 // Previously selected topic (if user selected)
 const selectedTheme = localStorage.getItem('selected-theme')
 const selectedIcon = localStorage.getItem('selected-icon')
 
-// We obtain the current theme that the interface has by validating the dark-theme class
+
+
+// Проверяем на текущее состояние темы, если стоит темная тема,
+// то, при нажатии поставить светлую тему и поменять название иконки на toggle right
+
 const getCurrentTheme = () => document.body.classList.contains(darkTheme) ? 'dark' : 'light'
-const getCurrentIcon = () => themeButton.classList.contains(iconTheme) ? 'bx-moon' : 'bx-sun'
+const getCurrentIcon = () => themeButton.classList.contains(iconTheme) ? 'bx-toggle-left' : 'bx-toggle-right'
 
 // We validate if the user previously chose a topic
 if (selectedTheme) {
   // If the validation is fulfilled, we ask what the issue was to know if we activated or deactivated the dark
   document.body.classList[selectedTheme === 'dark' ? 'add' : 'remove'](darkTheme)
-  themeButton.classList[selectedIcon === 'bx-moon' ? 'add' : 'remove'](iconTheme)
+  themeButton.classList[selectedIcon === 'bx-toggle-left' ? 'add' : 'remove'](iconTheme)
 }
 
 // Activate / deactivate the theme manually with the button
@@ -90,18 +99,27 @@ themeButton.addEventListener('click', () => {
 })
 
 /*==================== SCROLL REVEAL ANIMATION ====================*/
+
+
+
 const sr = ScrollReveal({
-    origin: 'bottom',
-    distance: '50px',
-    duration: 2000,
-    reset: false
+    distance: '30px',
+    duration: 1800,
+    reset: true,
 });
 
-sr.reveal(`.home__data, .home__img,
-            .about__data, .about__img,
-            .services__content, .menu__content,
-            .app__data, .app__img,
-            .contact__data, .contact__button,
-            .footer__content`, {
-    interval: 200
+sr.reveal(`.home__data, .home__img, 
+           .decoration__data,
+           .accessory__content,
+           .footer__content`, {
+    origin: 'top',
+    interval: 200,
+})
+
+sr.reveal(`.share__img, .send__content`, {
+    origin: 'left'
+})
+
+sr.reveal(`.share__data, .send__img`, {
+    origin: 'right'
 })
